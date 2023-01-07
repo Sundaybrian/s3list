@@ -13,22 +13,26 @@ AWS.config.update({
 });
 var s3 = new AWS.S3();
 
-/**
- *
- */
-
-router.post("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   const { limit = 200, nextMarker = "" } = req.query;
 
-  try {
-    var params = {
-      Bucket: AWS_STORAGE_BUCKET,
-      Delimiter: "/",
-      MaxKeys: limit, // limit
-      //Prefix: "20200219", // for searching
-      //   Marker: "20191203-082457_255745374723-all.mp3", // for paging
-    };
+  var params = {
+    Bucket: AWS_STORAGE_BUCKET,
+    Delimiter: "/",
+    MaxKeys: limit, // limit
+    //Prefix: "20200219", // for searching
+    //   Marker: "20191203-082457_255745374723-all.mp3", // for paging
+  };
 
+  if (req.query.search) {
+    params["Prefix"] = req.query.search;
+  }
+
+  if (req.query.nextPage) {
+    params["Marker"] = req.query.nextPage;
+  }
+
+  try {
     const data = await s3.listObjects(params).promise();
     return res.json(data);
   } catch (error) {
