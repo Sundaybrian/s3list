@@ -10,7 +10,7 @@
       'items-per-page-options': [10, 20, 30, 40, 50, 100],
     }"
     :items-per-page="30"
-    :search="search"
+    :loading-text="loading_text"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -55,14 +55,22 @@
 
 <script>
 import dayjs from "dayjs";
+import lodash from "lodash";
 export default {
   components: {},
+  watch: {
+    search() {
+      this.loading_text = "Waiting for you to stop typing...";
+      this.debouncedSearch();
+    },
+  },
   data: () => ({
     dialog: false,
     loading: false,
     hideFilesTables: false,
     dialogDelete: false,
     search: "",
+    loading_text: "",
     headers: [
       {
         text: "id",
@@ -105,6 +113,7 @@ export default {
 
   mounted() {
     this.fetchRecordings();
+    this.debouncedSearch = lodash.debounce(this.fetchRecordings, 500);
   },
 
   methods: {
@@ -117,7 +126,12 @@ export default {
     },
     fetchRecordings() {
       console.log("hello");
-      this.$store.dispatch("getRecordings", {});
+      if (!this.search) this.$store.dispatch("getRecordings", {});
+
+      this.$store.dispatch("getRecordings", {
+        search: this.search,
+      });
+      this.loading_text = "";
     },
 
     close() {
