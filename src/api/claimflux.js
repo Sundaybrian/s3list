@@ -14,7 +14,7 @@ AWS.config.update({
 var s3 = new AWS.S3();
 
 router.get("/", async (req, res, next) => {
-  const { limit = 200, nextMarker = "" } = req.query;
+  const { limit = 200, nextPage = "" } = req.query;
 
   var params = {
     Bucket: AWS_STORAGE_BUCKET,
