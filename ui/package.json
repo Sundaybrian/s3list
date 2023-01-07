@@ -5,15 +5,19 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "cross-env NODE_ENV=prod VUE_APP_STAGE=prod vue-cli-service build --dest ../public/dist",
-    "build:dev": "cross-env NODE_ENV=develop VUE_APP_STAGE=develop vue-cli-service build --dest ../public/dist",
-    "dev": "cross-env BROWSER=none VUE_APP_STAGE=develop NODE_ENV=develop vue-cli-service serve",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:dev": "cross-env NODE_ENV=develop VUE_APP_STAGE=develop vue-cli-service build --dest ../public/dist",
+    "dev": "cross-env BROWSER=none VUE_APP_STAGE=develop NODE_ENV=develop vue-cli-service serve"
   },
   "dependencies": {
+    "axios": "^1.2.2",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.11.7",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuetify": "^2.6.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -31,6 +35,10 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.2.1",
-    "vue-template-compiler": "^2.6.11"
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   }
 }
